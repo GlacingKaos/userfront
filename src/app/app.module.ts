@@ -1,16 +1,51 @@
+import { UserService } from './providers/user/user.service';
+import { AuthGuard } from './guard/auth_guard.service';
+import { AppRoutingModule } from './routes/app-routing.module';
+import { Auth } from './providers/auth/auth.service';
+import { FormsModule } from '@angular/forms';
+import { NgModule }      from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
 
-import { AppComponent } from './app.component';
+import { AppComponent }  from './components/app/app.component';
+
+import { components } from './components/index';
+
+import { AUTH_PROVIDERS } from 'angular2-jwt';
+import { HttpModule, XHRBackend } from '@angular/http';
+
+import { Logger } from "angular2-logger/core"; // ADD THIS
+
+import { provideAuth } from 'angular2-jwt';
+
+import { InterceptorXHRBackend } from './providers/interceptor/interceptor.service';
+
+import {NgxPaginationModule} from 'ngx-pagination'; 
 
 @NgModule({
-  declarations: [
-    AppComponent
+  imports: [ 
+    BrowserModule, 
+    HttpModule, 
+    AppRoutingModule, 
+    FormsModule,
+    NgxPaginationModule
   ],
-  imports: [
-    BrowserModule
+  declarations: [ 
+    AppComponent, 
+    components 
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [ AppComponent ],
+  providers: [ 
+    {provide: XHRBackend, useClass: InterceptorXHRBackend},
+    AUTH_PROVIDERS, 
+    Auth, 
+    AuthGuard,
+    Logger, 
+    UserService,
+    provideAuth({
+      tokenGetter: () => {
+        return localStorage.getItem('id_token')
+      }
+    }),
+  ]
 })
 export class AppModule { }
