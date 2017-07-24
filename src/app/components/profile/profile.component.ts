@@ -8,7 +8,13 @@ import { Component, OnInit } from '@angular/core';
     selector: 'profile',
     templateUrl: 'profile.html'
 })
-export class ProfileComponent 
+export class ProfileComponent implements OnInit
 { 
+    jwtHelper: JwtHelper = new JwtHelper();
+    user: any;
 
+    ngOnInit()
+    {
+        this.user = this.jwtHelper.decodeToken(localStorage.getItem("id_token"));
+    }
 }

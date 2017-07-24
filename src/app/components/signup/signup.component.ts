@@ -10,6 +10,7 @@ import { User } from '../../classes/user';
   templateUrl: 'signup.html',
   styleUrls: ['../login/login.css']
 })
+
 export class SignupComponent
 {
   formSubmit: boolean = false;
@@ -40,4 +41,5 @@ export class SignupComponent
   {
     this.router.navigate(["/login"]);
   }
+
 }

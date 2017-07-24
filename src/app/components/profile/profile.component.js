@@ -8,10 +8,15 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var angular2_jwt_1 = require('angular2-jwt');
 var core_1 = require('@angular/core');
 var ProfileComponent = (function () {
     function ProfileComponent() {
+        this.jwtHelper = new angular2_jwt_1.JwtHelper();
     }
+    ProfileComponent.prototype.ngOnInit = function () {
+        this.user = this.jwtHelper.decodeToken(localStorage.getItem("id_token"));
+    };
     ProfileComponent = __decorate([
         core_1.Component({
             moduleId: module.id,

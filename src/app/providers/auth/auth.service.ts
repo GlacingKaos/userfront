@@ -1,11 +1,10 @@
 import { Observable } from 'rxjs/Rx';
 import { Injectable } from '@angular/core';
 import { Http, Headers } from '@angular/http';
-import { AuthHttp } from 'angular2-jwt';
-import { tokenNotExpired } from 'angular2-jwt';
+import { AuthHttp, tokenNotExpired } from 'angular2-jwt';
 import { User } from '../../classes/user';
 
-@Injectable()
+@Injectable() 
 export class Auth 
 {
     private _apiUrl = 'http://localhost:8000/api/';

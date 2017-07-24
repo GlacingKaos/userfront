@@ -19,7 +19,7 @@ import { provideAuth } from 'angular2-jwt';
 
 import { InterceptorXHRBackend } from './providers/interceptor/interceptor.service';
 
-import {NgxPaginationModule} from 'ngx-pagination'; 
+import { NgxPaginationModule } from 'ngx-pagination'; 
 
 @NgModule({
   imports: [ 
@@ -42,7 +42,7 @@ import {NgxPaginationModule} from 'ngx-pagination';
     Logger, 
     UserService,
     provideAuth({
-      tokenGetter: () => {
+      tokenGetter:()=>{
         return localStorage.getItem('id_token')
       }
     }),

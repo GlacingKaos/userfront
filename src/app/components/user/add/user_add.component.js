@@ -8,17 +8,34 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var router_1 = require('@angular/router');
+var user_service_1 = require('./../../../providers/user/user.service');
+var user_1 = require('./../../../classes/user');
 var core_1 = require('@angular/core');
 var UserAddComponent = (function () {
-    function UserAddComponent() {
+    function UserAddComponent(userService, router) {
+        this.userService = userService;
+        this.router = router;
+        this.user = new user_1.User();
+        this.formSubmit = false;
+        this.formMsg = "";
     }
+    UserAddComponent.prototype.createUser = function (user) {
+        var _this = this;
+        this.userService.createUser(user).subscribe(function (res) {
+            _this.formMsg = "El usuario se ha creado correctamente";
+            _this.user = new user_1.User();
+        }, function (error) {
+            _this.formMsg = "Ha ocurrido un error procesando el formulario";
+        });
+    };
     UserAddComponent = __decorate([
         core_1.Component({
             moduleId: module.id,
             selector: 'user-add',
             templateUrl: 'user_add.html'
         }), 
-        __metadata('design:paramtypes', [])
+        __metadata('design:paramtypes', [user_service_1.UserService, router_1.Router])
     ], UserAddComponent);
     return UserAddComponent;
 }());

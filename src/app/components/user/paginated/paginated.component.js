@@ -14,12 +14,34 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var user_list_component_1 = require('./../list/user_list.component');
+var router_1 = require('@angular/router');
+var angular2_jwt_1 = require('angular2-jwt');
+var user_service_1 = require('../../../providers/user/user.service');
 var core_1 = require('@angular/core');
 var PaginatedComponent = (function (_super) {
     __extends(PaginatedComponent, _super);
-    function PaginatedComponent() {
-        _super.apply(this, arguments);
+    function PaginatedComponent(userService, router) {
+        _super.call(this, userService, router);
+        this.userService = userService;
+        this.router = router;
+        this.page = 1;
     }
+    PaginatedComponent.prototype.ngOnInit = function () {
+        this.getUsers();
+    };
+    PaginatedComponent.prototype.getUsers = function (page) {
+        var _this = this;
+        if (page === void 0) { page = 1; }
+        this.userService.getUserspaginated(page).subscribe(function (users) {
+            _this.page = page;
+            _this.users = users['data'];
+            _this.total = users['count'];
+        }, function (error) {
+            if (error instanceof angular2_jwt_1.AuthHttpError) {
+                _this.router.navigate(['/']);
+            }
+        });
+    };
     PaginatedComponent = __decorate([
         core_1.Component({
             moduleId: module.id,
@@ -27,7 +49,7 @@ var PaginatedComponent = (function (_super) {
             templateUrl: 'paginated.html',
             styles: ["\n        th{\n            text-align: center;\n        }\n    "]
         }), 
-        __metadata('design:paramtypes', [])
+        __metadata('design:paramtypes', [user_service_1.UserService, router_1.Router])
     ], PaginatedComponent);
     return PaginatedComponent;
 }(user_list_component_1.UserListComponent));

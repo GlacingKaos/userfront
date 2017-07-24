@@ -15,6 +15,7 @@ var user_add_component_1 = require('./../components/user/add/user_add.component'
 var core_1 = require('@angular/core');
 var router_1 = require('@angular/router');
 var profile_component_1 = require('../components/profile/profile.component');
+var auth_guard_service_1 = require('./../guard/auth_guard.service');
 var user_list_component_1 = require('./../components/user/list/user_list.component');
 var signup_component_1 = require('../components/signup/signup.component');
 var login_component_1 = require('./../components/login/login.component');
@@ -36,6 +37,8 @@ var AppRoutingModule = (function () {
                     {
                         path: 'users',
                         component: user_root_component_1.UserRootComponent,
+                        canActivate: [auth_guard_service_1.AuthGuard],
+                        canActivateChild: [auth_guard_service_1.AuthGuard],
                         children: [
                             {
                                 path: '',
@@ -57,7 +60,8 @@ var AppRoutingModule = (function () {
                     },
                     {
                         path: 'profile',
-                        component: profile_component_1.ProfileComponent
+                        component: profile_component_1.ProfileComponent,
+                        canActivate: [auth_guard_service_1.AuthGuard],
                     },
                     {
                         path: '',
